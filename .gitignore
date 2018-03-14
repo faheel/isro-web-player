@@ -102,3 +102,6 @@ ENV/
 
 # Text editor and IDE config
 .vscode
+
+# SQLite database
+db.sqlite3
