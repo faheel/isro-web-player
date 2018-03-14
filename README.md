@@ -1,4 +1,4 @@
-# ISRO cloud cover
+# ISRO web player
 
 ## Setup
 
@@ -6,6 +6,7 @@
 virtualenv -p /usr/bin/python3 venv
 . venv/bin/activate
 pip install -r requirements.txt
+python manage.py migrate
 ```
 
 ## Run
