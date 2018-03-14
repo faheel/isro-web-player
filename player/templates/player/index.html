@@ -1,12 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>ISRO Web PLayer</title>
+  <title>ISRO Web Player</title>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <!-- Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <!-- Styles -->
+  <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.css">
 </head>
-<body>
-    <h1>ISRO Web Player</h1>
+<body class="mdc-typography">
+  <header class="mdc-toolbar mdc-toolbar--fixed">
+    <div class="mdc-toolbar__row">
+      <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
+        <span class="mdc-toolbar__title">ISRO Web Player</span>
+      </section>
+    </div>
+  </header>
+
+  <main>
+    <div class="mdc-toolbar-fixed-adjust"></div>
+
+    <div class="mdc-layout-grid">
+      <section class="mdc-layout-grid__inner">
+        <div class="mdc-layout-grid__cell">
+          <h2 class="mdc-typography--title">Type</h2>
+          <div class="mdc-select" role="listbox">
+            <div class="mdc-select__surface" tabindex="0">
+              <div class="mdc-select__label">Select player type</div>
+              <div class="mdc-select__selected-text"></div>
+              <div class="mdc-select__bottom-line"></div>
+            </div>
+            <div class="mdc-menu mdc-select__menu">
+              <ul class="mdc-list mdc-menu__items">
+                <li class="mdc-list-item" role="option" tabindex="0" aria-selected>
+                  Cloud cover
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="mdc-layout-grid__inner">
+        <div class="mdc-layout-grid__cell">
+          <h2 class="mdc-typography--title">Duration</h2>
+
+        </div>
+      </section>
+
+      <section class="mdc-layout-grid__inner">
+        <div class="mdc-layout-grid__cell">
+          <h2 class="mdc-typography--title">Region</h2>
+
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.js"></script>
+  <script>
+    window.mdc.autoInit();
+    new mdc.select.MDCSelect(document.querySelector('.mdc-select'));
+  </script>
 </body>
 </html>
