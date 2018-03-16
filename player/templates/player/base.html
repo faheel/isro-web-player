@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  
+  <title>{% block title %}{% endblock %}ISRO Web Player</title>
+  
+  <!-- Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <!-- Styles -->
+  <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.css">
+  <link rel="stylesheet" href="{% static 'player/base.css' %}">
+</head>
+<body class="mdc-typography">
+  <header class="mdc-toolbar mdc-toolbar--fixed">
+    <div class="mdc-toolbar__row">
+      <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
+        <span class="mdc-toolbar__title">ISRO Web Player</span>
+      </section>
+    </div>
+  </header>
+
+  <main>
+    <div class="mdc-toolbar-fixed-adjust"></div>
+    {% block content %}
+    {% endblock %}
+  </main>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.js"></script>
+  <script>
+    window.mdc.autoInit();
+  </script>
+</body>
+</html>
