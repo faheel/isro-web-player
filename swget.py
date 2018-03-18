@@ -18,7 +18,7 @@ for date in tqdm(range(1, 31)):
             hour += 1
             minute %= 60
         
-        if hour > 23:
+        if hour >= 24:
             break
         
         #time.sleep(1)
