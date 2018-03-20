@@ -1,3 +1,7 @@
+.mdc-toolbar__menu-icon * {
+  color: #fff;
+}
+
 #config section {
   margin-bottom: 2rem;
 }
