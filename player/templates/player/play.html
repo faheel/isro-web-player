@@ -1,0 +1,25 @@
+{% extends 'player/base.html' %}
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'player/styles/player.css' %}">
+{% endblock %}
+
+{% block content %}
+<div id="player-container">
+  <div id="player-frame">
+
+  </div>
+  <div id="player-controls">
+    <div>
+      <i class="material-icons" id="skip-to-start">skip_previous</i>
+      <i class="material-icons" id="play">play_arrow</i>
+      <i class="material-icons" id="skip-to-end">skip_next</i>
+    </div>
+    <div>
+      <i class="material-icons" id="player-size">fullscreen</i>
+      <i class="material-icons" id="playback-speed">slow_motion_video</i>
+    </div>
+  </div>
+</div>
+{% endblock %}

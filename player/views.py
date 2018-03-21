@@ -7,3 +7,7 @@ def index(request):
 
 def config(request):
     return render(request, 'player/config.html', {})
+
+
+def play(request):
+    return render(request, 'player/play.html', {})
