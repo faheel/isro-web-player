@@ -1,6 +1,11 @@
 {% extends 'player/base.html' %}
+{% load static %}
 
 {% block title %}Configuration | {% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'player/styles/config.css' %}">
+{% endblock %}
 
 {% block content %}
 <div id="config" class="mdc-layout-grid">

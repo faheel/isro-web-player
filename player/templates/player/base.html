@@ -12,7 +12,8 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <!-- Styles -->
   <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.css">
-  <link rel="stylesheet" href="{% static 'player/base.css' %}">
+  <link rel="stylesheet" href="{% static 'player/styles/base.css' %}">
+  {% block styles %}{% endblock %}
 </head>
 <body class="mdc-typography">
   <header class="mdc-toolbar mdc-toolbar--fixed">
@@ -40,5 +41,6 @@
   <script>
     window.mdc.autoInit();
   </script>
+  {% block scripts %}{% endblock %}
 </body>
 </html>
