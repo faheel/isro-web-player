@@ -1,0 +1,78 @@
+{% extends 'player/base.html' %}
+{% load static %}
+
+{% block title %}Login | {% endblock %}
+
+{% block styles %}
+  <link rel="stylesheet" href="{% static 'player/styles/login.css' %}">
+{% endblock %}
+
+{% block toolbar_icon %}
+  <span class="mdc-toolbar__menu-icon mdc-ripple-surface">
+    <a href="javascript:history.back()"><i class="material-icons">arrow_back</i></a>
+  </span>
+{% endblock %}
+
+{% block content %}
+  <h1 class="mdc-typography--display1">Login</h1>
+
+  <form action="" method="post" id="login-form">
+    {% csrf_token %}
+    <div class="mdc-text-field" data-mdc-auto-init="MDCTextField">
+      <input class="mdc-text-field__input"
+             type="text"
+             name="{{ form.username.html_name }}"
+             id="{{ form.username.id_for_label }}"
+             required>
+      <label class="mdc-floating-label" for="{{ form.username.id_for_label }}">
+        Username
+      </label>
+      <div class="mdc-line-ripple"></div>
+    </div>
+
+    <div class="mdc-text-field" data-mdc-auto-init="MDCTextField">
+      <input class="mdc-text-field__input"
+             type="password"
+             name="{{ form.password.html_name }}"
+             id="{{ form.password.id_for_label }}"
+             required>
+      <label class="mdc-floating-label" for="{{ form.password.id_for_label }}">
+        Password
+      </label>
+      <div class="mdc-line-ripple"></div>
+    </div>
+
+    <button class="mdc-button mdc-button--raised"
+            type="submit"
+            id="login-button"
+            data-mdc-auto-init="MDCRipple">
+      Login
+    </button>
+  </form>
+
+  {% if is_invalid %}
+    <div class="mdc-snackbar"
+        aria-live="assertive"
+        aria-atomic="true"
+        aria-hidden="true">
+      <div class="mdc-snackbar__text"></div>
+      <div class="mdc-snackbar__action-wrapper">
+        <button type="button" class="mdc-snackbar__action-button"></button>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}
+
+{% block scripts %}
+  {% if is_invalid %}
+    <script>
+      mdc.snackbar.MDCSnackbar.attachTo(document.querySelector('.mdc-snackbar'))
+        .show({
+          message: 'Invalid username or password',
+          timeout: 5000,
+          actionText: 'Dismiss',
+          actionHandler: function(){}
+        });
+    </script>
+  {% endif %}
+{% endblock %}

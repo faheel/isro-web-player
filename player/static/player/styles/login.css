@@ -1,0 +1,22 @@
+body {
+  max-width: 24rem;
+  margin: auto;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+h1 {
+  margin-top: 8rem !important;
+  margin-bottom: 3rem;
+}
+
+#login-form * {
+  display: block !important;
+  width: 100%;
+}
+
+#login-button {
+  width: inherit;
+  margin: auto;
+  margin-top: 3rem;
+}

@@ -1,0 +1,23 @@
+{% extends 'player/base.html' %}
+{% load static %}
+
+{% block title %}Upload images | {% endblock %}
+
+{% block styles %}
+  <link rel="stylesheet" href="{% static 'player/styles/upload.css' %}">
+{% endblock %}
+
+{% block toolbar_icon %}
+  <span class="mdc-toolbar__menu-icon">
+    <a href="/"><i class="material-icons">home</i></a>
+  </span>
+{% endblock %}
+
+{% block content %}
+  <div id="config" class="mdc-layout-grid">
+    <h1 class="mdc-typography--display1">Upload images</h1>
+    
+    <button class="mdc-button" data-mdc-auto-init="MDCRipple">Cancel</button>
+    <button class="mdc-button mdc-button--raised" data-mdc-auto-init="MDCRipple">Upload</button>
+  </div>
+{% endblock %}
