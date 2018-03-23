@@ -7,6 +7,18 @@
 <link rel="stylesheet" href="{% static 'player/styles/config.css' %}">
 {% endblock %}
 
+{% block toolbar_icon %}
+<span class="mdc-toolbar__menu-icon">
+  <a href="/"><i class="material-icons">home</i></a>
+</span>
+{% endblock %}
+
+{% block toolbar_controls %}
+<section class="mdc-toolbar__section mdc-toolbar__section--align-end" role="toolbar">
+  <a href="/config" class="material-icons mdc-toolbar__icon" aria-label="Configure" alt="Configure">settings</a>
+</section>
+{% endblock %}
+
 {% block content %}
 <div id="config" class="mdc-layout-grid">
   <h1 class="mdc-typography--display1">Configuration</h1>
