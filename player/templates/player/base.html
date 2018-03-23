@@ -19,14 +19,10 @@
   <header class="mdc-toolbar mdc-toolbar--fixed">
     <div class="mdc-toolbar__row">
       <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
-        <span class="mdc-toolbar__menu-icon">
-          <a href="/"><i class="material-icons">home</i></a>
-        </span>
+          {% block toolbar_icon %}{% endblock %}  
         <span class="mdc-toolbar__title">ISRO Web Player</span>
       </section>
-      <section class="mdc-toolbar__section mdc-toolbar__section--align-end" role="toolbar">
-        <a href="/config" class="material-icons mdc-toolbar__icon" aria-label="Configure" alt="Configure">settings</a>
-      </section>
+      {% block toolbar_controls %}{% endblock %}
     </div>
   </header>
 
