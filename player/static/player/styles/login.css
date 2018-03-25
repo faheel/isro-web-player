@@ -10,8 +10,7 @@ h1 {
   margin-bottom: 3rem;
 }
 
-#login-form * {
-  display: block !important;
+#login-form > div {
   width: 100%;
 }
 
