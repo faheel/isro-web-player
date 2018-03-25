@@ -1,0 +1,19 @@
+#add-image-fab {
+  position: absolute;
+  right: 1.6rem;
+  bottom: -1.6rem;
+  z-index: 2;
+}
+
+.mdc-grid-tile {
+  --mdc-grid-list-tile-width: 250px;
+  width: 250px;
+}
+
+.mdc-grid-tile__secondary {
+  background-color: rgba(0,0,0,.87);
+}
+
+.mdc-grid-tile__icon {
+  cursor: pointer;
+}

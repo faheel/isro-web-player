@@ -13,11 +13,68 @@
   </span>
 {% endblock %}
 
-{% block content %}
+{% block toolbar_controls %}
+  <button class="mdc-fab material-icons mdc-ripple-upgraded"
+          id="add-image-fab"
+          aria-label="Add image">
+    <span class="mdc-fab__icon">add</span>
+  </button>
+{% endblock %}
+
+{% block content %}  
   <div id="config" class="mdc-layout-grid">
     <h1 class="mdc-typography--display1">Upload images</h1>
-    
-    <button class="mdc-button" data-mdc-auto-init="MDCRipple">Cancel</button>
-    <button class="mdc-button mdc-button--raised" data-mdc-auto-init="MDCRipple">Upload</button>
+
+    <p class="mdc-typography--subheading2">
+      Click the + to add an image to upload. Once done, click the save button at the bottom.
+    </p>
+  
+    <div class="mdc-grid-list mdc-grid-list--twoline-caption mdc-grid-list--with-icon-align-end">
+      <ul class="mdc-grid-list__tiles">
+        <li class="mdc-grid-tile">
+          <div class="mdc-grid-tile__primary">
+            <img class="mdc-grid-tile__primary-content" src="{% static 'player/images/map.jpg' %}" />
+          </div>
+          <span class="mdc-grid-tile__secondary">
+            <i class="mdc-grid-tile__icon material-icons" onclick="deleteTile(this.parentNode.parentNode)">delete</i>
+            <span class="mdc-grid-tile__title">21 March 2018</span>
+            <span class="mdc-grid-tile__support-text">06:30 AM</span>
+          </span>
+        </li>
+        <li class="mdc-grid-tile">
+          <div class="mdc-grid-tile__primary">
+            <img class="mdc-grid-tile__primary-content" src="{% static 'player/images/map.jpg' %}" />
+          </div>
+          <span class="mdc-grid-tile__secondary">
+            <i class="mdc-grid-tile__icon material-icons" onclick="deleteTile(this.parentNode.parentNode)">delete</i>
+            <span class="mdc-grid-tile__title">22 March 2018</span>
+            <span class="mdc-grid-tile__support-text">06:30 AM</span>
+          </span>
+        </li>
+        <li class="mdc-grid-tile">
+          <div class="mdc-grid-tile__primary">
+            <img class="mdc-grid-tile__primary-content" src="{% static 'player/images/map.jpg' %}" />
+          </div>
+          <span class="mdc-grid-tile__secondary">
+            <i class="mdc-grid-tile__icon material-icons" onclick="deleteTile(this.parentNode.parentNode)">delete</i>
+            <span class="mdc-grid-tile__title">23 March 2018</span>
+            <span class="mdc-grid-tile__support-text">06:30 AM</span>
+          </span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="button-container">
+      <button class="mdc-button mdc-button--raised" data-mdc-auto-init="MDCRipple">Save</button>
+      <button class="mdc-button" data-mdc-auto-init="MDCRipple">Cancel</button>
+    </div>
   </div>
+{% endblock %}
+
+{% block scripts %}
+  <script>    
+    function deleteTile(tile) {
+      tile.parentNode.removeChild(tile);
+    };
+  </script>
 {% endblock %}
