@@ -9,7 +9,7 @@
 #config .material-icons {
   vertical-align: middle;
   margin-right: 1rem;
-  color: var(--mdc-theme-primary);
+  color: var(--mdc-theme-secondary);
 }
 
 #config .mdc-layout-grid__cell > div {
