@@ -1,3 +1,17 @@
+:root {
+  /* Theme */
+  --mdc-theme-primary: #3F51B5;
+  --mdc-theme-primary-light: #7986CB;
+  --mdc-theme-primary-dark: #303F9F;
+  --mdc-theme-secondary: #E91E63;
+  --mdc-theme-secondary-light: #F06292;
+  --mdc-theme-secondary-dark: #C2185B;
+}
+
 .mdc-toolbar .material-icons {
   color: var(--mdc-theme-text-primary-on-primary);
+}
+
+.button-container {
+  padding-top: 2rem;
 }
