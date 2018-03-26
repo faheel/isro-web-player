@@ -8,21 +8,18 @@
 {% endblock %}
 
 {% block toolbar_icon %}
-  <span class="mdc-toolbar__menu-icon">
-    <a href="/"><i class="material-icons">home</i></a>
+  <span class="mdc-toolbar__menu-icon mdc-ripple-surface">
+    <a href="javascript:history.back()">
+      <i class="material-icons">arrow_back</i>
+    </a>
   </span>
-{% endblock %}
-
-{% block toolbar_controls %}
-  <section class="mdc-toolbar__section mdc-toolbar__section--align-end" role="toolbar">
-    <a href="/config" class="material-icons mdc-toolbar__icon"
-       aria-label="Configure" alt="Configure">settings</a>
-  </section>
 {% endblock %}
 
 {% block content %}
   <div id="config" class="mdc-layout-grid">
-    <h1 class="mdc-typography--display1">Configuration</h1>
+    <h1 class="mdc-typography--display1">
+      Configuration
+    </h1>
 
     <section class="mdc-layout-grid__inner">
       <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
@@ -32,10 +29,14 @@
           </h2>
         </div>
         <div>
-          <h2 class="mdc-typography--headline">Type</h2>
+          <h2 class="mdc-typography--headline">
+            Type
+          </h2>
           <div class="mdc-select" role="listbox" data-mdc-auto-init="MDCSelect">
             <div class="mdc-select__surface" tabindex="0">
-              <div class="mdc-select__label">Select player type</div>
+              <div class="mdc-select__label">
+                Player type
+              </div>
               <div class="mdc-select__selected-text"></div>
               <div class="mdc-select__bottom-line"></div>
             </div>
@@ -59,30 +60,57 @@
           </h2>
         </div>
         <div>
-          <h2 class="mdc-typography--headline">Date and time</h2>
+          <h2 class="mdc-typography--headline">
+            Date and time
+          </h2>
           
-          <h3 class="mdc-typography--subheading2">Start</h3>
-          <div class="mdc-text-field" data-mdc-auto-init="MDCTextField">
-            <input type="date" id="start-date" class="mdc-text-field__input">
-            <label class="mdc-floating-label" for="start-date">Date</label>
-            <div class="mdc-line-ripple"></div>
-          </div>
-          <div class="mdc-text-field" data-mdc-auto-init="MDCTextField">
-            <input type="time" id="start-time" class="mdc-text-field__input">
-            <label class="mdc-floating-label" for="start-time">Time</label>
-            <div class="mdc-line-ripple"></div>
+          <h3 class="mdc-typography--subheading2">
+            Start
+          </h3>
+          <div>
+            <div class="mdc-text-field" data-mdc-auto-init="MDCTextField">
+              <input class="mdc-text-field__input"
+                     type="date"
+                     id="start-date"
+                     value="2018-01-01">
+              <label class="mdc-floating-label" for="start-date">
+                Date
+              </label>
+              <div class="mdc-line-ripple"></div>
+            </div>
+            <div class="mdc-text-field" data-mdc-auto-init="MDCTextField">
+              <input type="time" id="start-time" class="mdc-text-field__input" value="00:00">
+              <label class="mdc-floating-label" for="start-time">
+                Time
+              </label>
+              <div class="mdc-line-ripple"></div>
+            </div>
           </div>
           
-          <h3 class="mdc-typography--subheading2">End</h3>
-          <div class="mdc-text-field" data-mdc-auto-init="MDCTextField">
-            <input type="date" id="end-date" class="mdc-text-field__input">
-            <label class="mdc-floating-label" for="end-date">Date</label>
-            <div class="mdc-line-ripple"></div>
-          </div>
-          <div class="mdc-text-field" data-mdc-auto-init="MDCTextField">
-            <input type="time" id="end-time" class="mdc-text-field__input">
-            <label class="mdc-floating-label" for="end-time">Time</label>
-            <div class="mdc-line-ripple"></div>
+          <h3 class="mdc-typography--subheading2">
+            End
+          </h3>
+          <div>
+            <div class="mdc-text-field" data-mdc-auto-init="MDCTextField">
+              <input class="mdc-text-field__input"
+                     type="date"
+                     id="end-date"
+                     value="2018-01-01">
+              <label class="mdc-floating-label" for="end-date">
+                Date
+              </label>
+              <div class="mdc-line-ripple"></div>
+            </div>
+            <div class="mdc-text-field" data-mdc-auto-init="MDCTextField">
+              <input class="mdc-text-field__input"
+                     type="time"
+                     id="end-time"
+                     value="00:00">
+              <label class="mdc-floating-label" for="end-time">
+                Time
+              </label>
+              <div class="mdc-line-ripple"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -100,34 +128,72 @@
             Region
           </h2>
           
-          <h3 class="mdc-typography--subheading2">Latitude</h3>
-          <div class="mdc-text-field" data-mdc-auto-init="MDCTextField">
-            <input type="number" min="-10" max="50" step="0.01" id="latitude-start" class="mdc-text-field__input">
-            <label class="mdc-floating-label" for="latitude-start">Start</label>
-            <div class="mdc-line-ripple"></div>
-          </div>
-          <div class="mdc-text-field" data-mdc-auto-init="MDCTextField">
-            <input type="number" min="-10" max="50" step="0.01" id="latitude-end" class="mdc-text-field__input">
-            <label class="mdc-floating-label" for="latitude-end">End</label>
-            <div class="mdc-line-ripple"></div>
+          <h3 class="mdc-typography--subheading2">
+            Latitude
+          </h3>
+          <div class="input-container">
+            <div class="mdc-text-field" data-mdc-auto-init="MDCTextField">
+              <input class="mdc-text-field__input"
+                     type="number"
+                     min="-10" max="50" step="0.01"
+                     id="latitude-start">
+              <label class="mdc-floating-label" for="latitude-start">
+                Start
+              </label>
+              <div class="mdc-line-ripple"></div>
+            </div>
+            <div class="mdc-text-field" data-mdc-auto-init="MDCTextField">
+              <input class="mdc-text-field__input"
+                     type="number"
+                     min="-10" max="50" step="0.01"
+                     id="latitude-end">
+              <label class="mdc-floating-label" for="latitude-end">
+                End
+              </label>
+              <div class="mdc-line-ripple"></div>
+            </div>
           </div>
           
-          <h3 class="mdc-typography--subheading2">Longitude</h3>
-          <div class="mdc-text-field" data-mdc-auto-init="MDCTextField">
-            <input type="number" min="40" max="110" step="0.01" id="longitude-start" class="mdc-text-field__input">
-            <label class="mdc-floating-label" for="longitude-start">Start</label>
-            <div class="mdc-line-ripple"></div>
-          </div>
-          <div class="mdc-text-field" data-mdc-auto-init="MDCTextField">
-            <input type="number" min="40" max="110" step="0.01" id="longitude-end" class="mdc-text-field__input">
-            <label class="mdc-floating-label" for="longitude-end">End</label>
-            <div class="mdc-line-ripple"></div>
+          <h3 class="mdc-typography--subheading2">
+            Longitude
+          </h3>
+          <div class="input-container">
+            <div class="mdc-text-field" data-mdc-auto-init="MDCTextField">
+              <input class="mdc-text-field__input"
+                     type="number"
+                     min="40" max="110" step="0.01"
+                     id="longitude-start">
+              <label class="mdc-floating-label" for="longitude-start">
+                Start
+              </label>
+              <div class="mdc-line-ripple"></div>
+            </div>
+            <div class="mdc-text-field" data-mdc-auto-init="MDCTextField">
+              <input class="mdc-text-field__input"
+                     type="number"
+                     min="40" max="110" step="0.01"
+                     id="longitude-end">
+              <label class="mdc-floating-label" for="longitude-end">
+                End
+              </label>
+              <div class="mdc-line-ripple"></div>
+            </div>
           </div>
         </div>
       </div>
     </section>
     
-    <button class="mdc-button" data-mdc-auto-init="MDCRipple">Reset</button>
-    <button class="mdc-button mdc-button--raised" data-mdc-auto-init="MDCRipple">Save</button>
+    <div class="button-container">
+      <button class="mdc-button mdc-button--raised"
+              type="submit"
+              data-mdc-auto-init="MDCRipple">
+        Save
+      </button>
+      <button class="mdc-button"
+              type="reset"
+              data-mdc-auto-init="MDCRipple">
+        Reset
+      </button>
+    </div>
   </div>
 {% endblock %}
