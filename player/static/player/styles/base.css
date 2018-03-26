@@ -1,5 +1,14 @@
+body {
+  margin: 0;
+  background-color: #ECEFF1;
+}
+
+main {
+  background-color: #fff;
+}
+
+/* Set theme colors */
 :root {
-  /* Theme */
   --mdc-theme-primary: #3F51B5;
   --mdc-theme-primary-light: #7986CB;
   --mdc-theme-primary-dark: #303F9F;
@@ -7,11 +16,38 @@
   --mdc-theme-secondary-light: #F06292;
   --mdc-theme-secondary-dark: #C2185B;
 }
+.mdc-select:not(.mdc-select--disabled) .mdc-select__surface:focus .mdc-select__label, .mdc-select:not(.mdc-select--disabled).mdc-select--open .mdc-select__label {
+  color: #3F51B5;
+  color: var(--mdc-theme-primary, #3F51B5);
+}
+
+.mdc-toolbar__title {
+  overflow: inherit;
+}
 
 .mdc-toolbar .material-icons {
   color: var(--mdc-theme-text-primary-on-primary);
 }
 
+#toolbar-menu a {
+  color: inherit;
+  text-decoration: none;
+  width: 100%;
+  text-align: inherit;
+}
+
+p .material-icons {
+  vertical-align: text-bottom;
+}
+
 .button-container {
-  padding-top: 2rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+footer {
+  text-align: center;
+  background-color: #ECEFF1;
+  color: rgba(0, 0, 0, 0.54);
+  color: var(--mdc-theme-text-secondary-on-primary-light, rgba(0, 0, 0, 0.54));
 }

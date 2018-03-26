@@ -22,7 +22,40 @@
           {% block toolbar_icon %}{% endblock %}  
         <span class="mdc-toolbar__title">ISRO Web Player</span>
       </section>
-      {% block toolbar_controls %}{% endblock %}
+      <section class="mdc-toolbar__section mdc-toolbar__section--align-end" role="toolbar">
+        {% block toolbar_controls %}
+        {% endblock %}
+        
+        <!-- Menu toggler -->
+        <span class="material-icons mdc-toolbar__icon"
+              id="toolbar-menu-toggle"
+              aria-label="Menu"
+              alt="Menu">more_vert</span>
+        <!-- Menu -->
+        <div class="mdc-menu" id="toolbar-menu">
+          <ul class="mdc-menu__items mdc-list">
+            <li class="mdc-list-item" role="menuitem">
+              <a href="/upload">Upload images</a>
+            </li>
+            <li class="mdc-list-item" role="menuitem">
+              <a href="/admin">Admin site</a>
+            </li>
+            <li class="mdc-list-divider" role="separator"></li>
+            {% if user.is_authenticated %}
+              <li class="mdc-list-item" role="menuitem" aria-disabled="true">
+                {{ user.username }}
+              </li>
+              <li class="mdc-list-item" role="menuitem">
+                <a href="/logout">Logout</a>
+              </li>
+            {% else %}
+              <li class="mdc-list-item" role="menuitem">
+                <a href="/login">Login</a>
+              </li>
+            {% endif %}
+          </ul>
+        </div>
+      </section>
     </div>
   </header>
 
@@ -32,10 +65,30 @@
     {% endblock %}
   </main>
 
+  <footer>
+    <div class="mdc-layout-grid">
+      <section class="mdc-layout-grid__inner">
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+          <p class="mdc-typography--body1">Team Startroopers</p>
+          <p class="mdc-typography--caption">Smart India Hackathon 2018</p>
+        </div>
+      </section>
+    </div>
+  </footer>
+
   <!-- Scripts -->
   <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.js"></script>
   <script>
     window.mdc.autoInit();
+
+    // Toolbar menu
+    var menuEl = document.querySelector('#toolbar-menu');
+    var menu = new mdc.menu.MDCMenu(menuEl);
+    // toggle menu
+    var toggle = document.querySelector('#toolbar-menu-toggle');
+    toggle.addEventListener('click', function() {
+      menu.open = !menu.open;
+    });
   </script>
   {% block scripts %}{% endblock %}
 </body>
