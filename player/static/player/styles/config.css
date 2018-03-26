@@ -1,5 +1,5 @@
 #config section {
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 #config .mdc-typography--subheading2 {
@@ -14,4 +14,8 @@
 
 #config .mdc-layout-grid__cell > div {
   float: left;
+}
+
+.input-container .mdc-text-field {
+  max-width: 120px;
 }
