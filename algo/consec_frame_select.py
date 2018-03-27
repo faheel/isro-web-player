@@ -34,6 +34,8 @@ def do_stuff(src_dir, dst_dir):
     except:
         pass
     
+    global img_datetime
+    
     for img_name in sorted(os.listdir(src_dir)):
         if img_name.endswith(".jpg"):
             tokens = img_name.split('_')
