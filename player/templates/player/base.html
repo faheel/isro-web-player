@@ -82,12 +82,12 @@
     window.mdc.autoInit();
 
     // Toolbar menu
-    var menuEl = document.querySelector('#toolbar-menu');
-    var menu = new mdc.menu.MDCMenu(menuEl);
+    var toolbarMenuElement = document.getElementById('toolbar-menu');
+    var toolbarMenu = new mdc.menu.MDCMenu(toolbarMenuElement);
     // toggle menu
-    var toggle = document.querySelector('#toolbar-menu-toggle');
+    var toggle = document.getElementById('toolbar-menu-toggle');
     toggle.addEventListener('click', function() {
-      menu.open = !menu.open;
+      toolbarMenu.open = !toolbarMenu.open;
     });
   </script>
   {% block scripts %}{% endblock %}
