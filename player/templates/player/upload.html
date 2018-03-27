@@ -13,68 +13,71 @@
   </span>
 {% endblock %}
 
-{% block toolbar_controls %}
+{% block content %}
+  <form enctype="multipart/form-data" action="" method="POST">
+    {% csrf_token %}
+    <div id="config" class="mdc-layout-grid">
+      <h1 class="mdc-typography--display1">Upload images</h1>
+  
+      <div class="mdc-select" id="select-menu" role="listbox" data-mdc-auto-init="MDCSelect">
+        <div class="mdc-select__surface" tabindex="0">
+          <div class="mdc-select__label">Image type</div>
+          <div class="mdc-select__selected-text"></div>
+          <input type="text" id="image-type" name="image-type" value="Cloud" hidden>
+          <div class="mdc-select__bottom-line"></div>
+        </div>
+        <div class="mdc-menu mdc-select__menu">
+          <ul class="mdc-list mdc-menu__items">
+            <li class="mdc-list-item" role="option" tabindex="0" aria-selected>
+              Cloud cover
+            </li>
+          </ul>
+        </div>
+      </div>
+  
+      <p class="mdc-typography--subheading2">
+        Click the <i class="material-icons">add</i> button to add an image.
+        Once done, click the upload button at the bottom to upload the added images.
+      </p>
+    
+      <div class="mdc-grid-list mdc-grid-list--twoline-caption mdc-grid-list--with-icon-align-end">
+        <ul class="mdc-grid-list__tiles" id="tiles-container">
+        </ul>
+      </div>
+  
+      <div id="file-input-container">
+      </div>
+  
+      <div class="button-container">
+        <button class="mdc-button mdc-button--raised" data-mdc-auto-init="MDCRipple">Upload</button>
+        <button class="mdc-button" data-mdc-auto-init="MDCRipple">Cancel</button>
+      </div>
+    </div>
+  </form>
+
   <button class="mdc-fab material-icons mdc-ripple-upgraded"
+          type="button"
           id="add-image-fab"
+          onclick="addFileInput()"
           aria-label="Add image">
     <span class="mdc-fab__icon">add</span>
   </button>
 {% endblock %}
 
-{% block content %}  
-  <div id="config" class="mdc-layout-grid">
-    <h1 class="mdc-typography--display1">Upload images</h1>
-
-    <p class="mdc-typography--subheading2">
-      Click the + to add an image to upload. Once done, click the save button at the bottom.
-    </p>
-  
-    <div class="mdc-grid-list mdc-grid-list--twoline-caption mdc-grid-list--with-icon-align-end">
-      <ul class="mdc-grid-list__tiles">
-        <li class="mdc-grid-tile">
-          <div class="mdc-grid-tile__primary">
-            <img class="mdc-grid-tile__primary-content" src="{% static 'player/images/map.jpg' %}" />
-          </div>
-          <span class="mdc-grid-tile__secondary">
-            <i class="mdc-grid-tile__icon material-icons" onclick="deleteTile(this.parentNode.parentNode)">delete</i>
-            <span class="mdc-grid-tile__title">21 March 2018</span>
-            <span class="mdc-grid-tile__support-text">06:30 AM</span>
-          </span>
-        </li>
-        <li class="mdc-grid-tile">
-          <div class="mdc-grid-tile__primary">
-            <img class="mdc-grid-tile__primary-content" src="{% static 'player/images/map.jpg' %}" />
-          </div>
-          <span class="mdc-grid-tile__secondary">
-            <i class="mdc-grid-tile__icon material-icons" onclick="deleteTile(this.parentNode.parentNode)">delete</i>
-            <span class="mdc-grid-tile__title">22 March 2018</span>
-            <span class="mdc-grid-tile__support-text">06:30 AM</span>
-          </span>
-        </li>
-        <li class="mdc-grid-tile">
-          <div class="mdc-grid-tile__primary">
-            <img class="mdc-grid-tile__primary-content" src="{% static 'player/images/map.jpg' %}" />
-          </div>
-          <span class="mdc-grid-tile__secondary">
-            <i class="mdc-grid-tile__icon material-icons" onclick="deleteTile(this.parentNode.parentNode)">delete</i>
-            <span class="mdc-grid-tile__title">23 March 2018</span>
-            <span class="mdc-grid-tile__support-text">06:30 AM</span>
-          </span>
-        </li>
-      </ul>
-    </div>
-
-    <div class="button-container">
-      <button class="mdc-button mdc-button--raised" data-mdc-auto-init="MDCRipple">Save</button>
-      <button class="mdc-button" data-mdc-auto-init="MDCRipple">Cancel</button>
-    </div>
-  </div>
-{% endblock %}
-
 {% block scripts %}
-  <script>    
-    function deleteTile(tile) {
-      tile.parentNode.removeChild(tile);
-    };
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="{% static 'player/scripts/upload.js' %}"></script>
+  <script>
+    var imageTypeMenu = document.getElementById('select-menu');
+    var imageSelect = new mdc.select.MDCSelect(imageTypeMenu);
+    imageTypeInput = document.getElementById('image-type');
+    imageTypeMenu.addEventListener('MDCSelect:change', function() {
+      var item = imageSelect.selectedOptions[0];
+      switch (item.textContent.trim()) {
+        case 'Cloud cover':
+          imageTypeInput.value = 'cloud_cover';
+          break;
+      }
+    });
   </script>
 {% endblock %}
