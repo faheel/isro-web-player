@@ -38,7 +38,7 @@ def do_stuff(src_dir, dst_dir):
         if img_name.endswith(".jpg"):
             tokens = img_name.split('_')
             hour = int(tokens[2][:2])
-            minute = int(tokens[2][2:]])
+            minute = int(tokens[2][2:])
             day = int(tokens[1][:2])
             
             for i in xrange(12):
