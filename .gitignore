@@ -105,3 +105,6 @@ ENV/
 
 # SQLite database
 db.sqlite3
+
+# User uploads
+uploads
