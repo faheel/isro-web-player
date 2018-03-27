@@ -59,13 +59,13 @@ def crops(SRC, DEST, ids):
     names = []
     for i in range(0,3):
         for j in range(0,3):
-            if i * j not in ids:
-                continue
+                        
             cropped_img = margin.crop((i*z + i, j*z + j, (i+1)*z + i, (j+1)*z + j))
             name = os.path.join(DEST,str(a) + '_' + os.path.basename(SRC))           
-            cropped_img.save(name)
+            if a in ids:            
+                cropped_img.save(name)
             names.append(os.path.basename(name))
-            a+=1
+            a += 1  
     return names
     
 
