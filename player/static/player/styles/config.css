@@ -19,3 +19,9 @@
 .input-container .mdc-text-field {
   max-width: 120px;
 }
+
+#region-canvas {
+  width: 100%;
+  background-image: url('../images/map.jpg');
+  background-size: contain;
+}

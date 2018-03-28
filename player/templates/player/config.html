@@ -20,83 +20,62 @@
     <h1 class="mdc-typography--display1">
       Configuration
     </h1>
-
-    <section class="mdc-layout-grid__inner">
-      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-        <div>
-          <h2 class="mdc-typography--headline">
-            <i class="material-icons">filter</i>
-          </h2>
-        </div>
-        <div>
-          <h2 class="mdc-typography--headline">
-            Type
-          </h2>
-          <div class="mdc-select" role="listbox" data-mdc-auto-init="MDCSelect">
-            <div class="mdc-select__surface" tabindex="0">
-              <div class="mdc-select__label">
-                Player type
+    <form action="" method="POST">
+      {% csrf_token %}
+      <section class="mdc-layout-grid__inner">
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+          <div>
+            <h2 class="mdc-typography--headline">
+              <i class="material-icons">filter</i>
+            </h2>
+          </div>
+          <div>
+            <h2 class="mdc-typography--headline">
+              Type
+            </h2>
+            <div class="mdc-select" id="select-menu" role="listbox" data-mdc-auto-init="MDCSelect">
+              <div class="mdc-select__surface" tabindex="0">
+                <div class="mdc-select__label">
+                  Player type
+                </div>
+                <div class="mdc-select__selected-text"></div>
+                <div class="mdc-select__bottom-line"></div>
+                <input type="text" id="player-type" name="player-type" value="cloud_cover" hidden>
               </div>
-              <div class="mdc-select__selected-text"></div>
-              <div class="mdc-select__bottom-line"></div>
-            </div>
-            <div class="mdc-menu mdc-select__menu">
-              <ul class="mdc-list mdc-menu__items">
-                <li class="mdc-list-item" role="option" tabindex="0" aria-selected>
-                  Cloud cover
-                </li>
-              </ul>
+              <div class="mdc-menu mdc-select__menu">
+                <ul class="mdc-list mdc-menu__items">
+                  <li class="mdc-list-item" role="option" tabindex="0" aria-selected>
+                    Cloud cover
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
-
-    <section class="mdc-layout-grid__inner">
-      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-        <div>
-          <h2 class="mdc-typography--headline">
-            <i class="material-icons">date_range</i>
-          </h2>
-        </div>
-        <div>
-          <h2 class="mdc-typography--headline">
-            Date and time
-          </h2>
-          
-          <h3 class="mdc-typography--subheading2">
-            Start
-          </h3>
+      </section>
+  
+      <section class="mdc-layout-grid__inner">
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
           <div>
+            <h2 class="mdc-typography--headline">
+              <i class="material-icons">date_range</i>
+            </h2>
+          </div>
+          <div>
+            <h2 class="mdc-typography--headline">
+              Date and time
+            </h2>
+            
+            <h3 class="mdc-typography--subheading2">
+              Start
+            </h3>
             <div class="mdc-text-field" data-mdc-auto-init="MDCTextField">
               <input class="mdc-text-field__input"
-                     type="date"
-                     id="start-date"
-                     value="2018-01-01">
+                      type="date"
+                      id="start-date"
+                      name="start-date"
+                      value="2018-01-01" required>
               <label class="mdc-floating-label" for="start-date">
-                Date
-              </label>
-              <div class="mdc-line-ripple"></div>
-            </div>
-            <div class="mdc-text-field" data-mdc-auto-init="MDCTextField">
-              <input type="time" id="start-time" class="mdc-text-field__input" value="00:00">
-              <label class="mdc-floating-label" for="start-time">
-                Time
-              </label>
-              <div class="mdc-line-ripple"></div>
-            </div>
-          </div>
-          
-          <h3 class="mdc-typography--subheading2">
-            End
-          </h3>
-          <div>
-            <div class="mdc-text-field" data-mdc-auto-init="MDCTextField">
-              <input class="mdc-text-field__input"
-                     type="date"
-                     id="end-date"
-                     value="2018-01-01">
-              <label class="mdc-floating-label" for="end-date">
                 Date
               </label>
               <div class="mdc-line-ripple"></div>
@@ -104,8 +83,35 @@
             <div class="mdc-text-field" data-mdc-auto-init="MDCTextField">
               <input class="mdc-text-field__input"
                      type="time"
-                     id="end-time"
-                     value="00:00">
+                     id="start-time"
+                     name="start-time"
+                     value="00:00" required>
+              <label class="mdc-floating-label" for="start-time">
+                Time
+              </label>
+              <div class="mdc-line-ripple"></div>
+            </div>
+            
+            <h3 class="mdc-typography--subheading2">
+              End
+            </h3>
+            <div class="mdc-text-field" data-mdc-auto-init="MDCTextField">
+              <input class="mdc-text-field__input"
+                      type="date"
+                      id="end-date"
+                      name="end-date"
+                      value="2018-01-01" required>
+              <label class="mdc-floating-label" for="end-date">
+                Date
+              </label>
+              <div class="mdc-line-ripple"></div>
+            </div>
+            <div class="mdc-text-field" data-mdc-auto-init="MDCTextField">
+              <input class="mdc-text-field__input"
+                      type="time"
+                      id="end-time"
+                      name="end-time"
+                      value="00:00" required>
               <label class="mdc-floating-label" for="end-time">
                 Time
               </label>
@@ -113,87 +119,74 @@
             </div>
           </div>
         </div>
-      </div>
-    </section>
-
-    <section class="mdc-layout-grid__inner">
-      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-        <div>
-          <h2 class="mdc-typography--headline">
-            <i class="material-icons">crop_free</i>
-          </h2>
-        </div>
-        <div>
-          <h2 class="mdc-typography--headline">
-            Region
-          </h2>
-          
-          <h3 class="mdc-typography--subheading2">
-            Latitude
-          </h3>
-          <div class="input-container">
-            <div class="mdc-text-field" data-mdc-auto-init="MDCTextField">
-              <input class="mdc-text-field__input"
-                     type="number"
-                     min="-10" max="50" step="0.01"
-                     id="latitude-start">
-              <label class="mdc-floating-label" for="latitude-start">
-                Start
-              </label>
-              <div class="mdc-line-ripple"></div>
-            </div>
-            <div class="mdc-text-field" data-mdc-auto-init="MDCTextField">
-              <input class="mdc-text-field__input"
-                     type="number"
-                     min="-10" max="50" step="0.01"
-                     id="latitude-end">
-              <label class="mdc-floating-label" for="latitude-end">
-                End
-              </label>
-              <div class="mdc-line-ripple"></div>
-            </div>
+      </section>
+  
+      <section class="mdc-layout-grid__inner">
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+          <div>
+            <h2 class="mdc-typography--headline">
+              <i class="material-icons">crop_free</i>
+            </h2>
           </div>
-          
-          <h3 class="mdc-typography--subheading2">
-            Longitude
-          </h3>
-          <div class="input-container">
-            <div class="mdc-text-field" data-mdc-auto-init="MDCTextField">
-              <input class="mdc-text-field__input"
-                     type="number"
-                     min="40" max="110" step="0.01"
-                     id="longitude-start">
-              <label class="mdc-floating-label" for="longitude-start">
-                Start
-              </label>
-              <div class="mdc-line-ripple"></div>
-            </div>
-            <div class="mdc-text-field" data-mdc-auto-init="MDCTextField">
-              <input class="mdc-text-field__input"
-                     type="number"
-                     min="40" max="110" step="0.01"
-                     id="longitude-end">
-              <label class="mdc-floating-label" for="longitude-end">
-                End
-              </label>
-              <div class="mdc-line-ripple"></div>
-            </div>
-          </div>
-        </div>
+          <div>
+            <h2 class="mdc-typography--headline">
+              Region
+            </h2>
+            <canvas id="region-canvas"></canvas>
+            <input type="text" id="lat-start-ratio" name="lat-start-ratio" hidden>
+            <input type="text" id="lat-end-ratio" name="lat-end-ratio" hidden>
+            <input type="text" id="long-start-ratio" name="long-start-ratio" hidden>
+            <input type="text" id="long-end-ratio" name="long-end-ratio" hidden>
+      </section>
+      
+      <div class="button-container">
+        <button class="mdc-button mdc-button--raised"
+                type="submit"
+                data-mdc-auto-init="MDCRipple">
+          Save
+        </button>
       </div>
-    </section>
-    
-    <div class="button-container">
-      <button class="mdc-button mdc-button--raised"
-              type="submit"
-              data-mdc-auto-init="MDCRipple">
-        Save
-      </button>
-      <button class="mdc-button"
-              type="reset"
-              data-mdc-auto-init="MDCRipple">
-        Reset
-      </button>
-    </div>
+    </form>
   </div>
+
+  {% if is_invalid %}
+    <div class="mdc-snackbar"
+        aria-live="assertive"
+        aria-atomic="true"
+        aria-hidden="true">
+      <div class="mdc-snackbar__text"></div>
+      <div class="mdc-snackbar__action-wrapper">
+        <button type="button" class="mdc-snackbar__action-button"></button>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}
+
+{% block scripts %}
+  <script src="{% static 'player/scripts/config.js' %}"></script>
+  <script>
+    var playerTypeMenu = document.getElementById('select-menu');
+    var playerSelect = new mdc.select.MDCSelect(playerTypeMenu);
+    playerTypeInput = document.getElementById('player-type');
+    playerTypeMenu.addEventListener('MDCSelect:change', function() {
+      var item = playerSelect.selectedOptions[0];
+      switch (item.textContent.trim()) {
+        case 'Cloud cover':
+          playerTypeInput.value = 'cloud_cover';
+          break;
+      }
+    });
+  </script>
+  {% if is_invalid %}
+    <script>
+      mdc.snackbar.MDCSnackbar.attachTo(document.querySelector('.mdc-snackbar'))
+        .show({
+          message: 'The date and time range is invalid',
+          timeout: 5000,
+          actionText: 'Dismiss',
+          actionHandler: function(){}
+        });
+    </script>
+  {% endif %}
+  </script>
 {% endblock %}
