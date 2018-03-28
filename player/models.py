@@ -15,4 +15,4 @@ class Image(models.Model):
     
     class Meta:
         ordering = ['date', 'time']
-        unique_together = ('date', 'time')
+        unique_together = ('image_type', 'date', 'time')
