@@ -13,8 +13,17 @@ from .models import Image
 
 def play(request):
     if request.session.get('is_configured'):
-        # fetch images
-        return render(request, 'player/play.html', {})
+        start_date_time = request.session['start_date_time']
+        end_date_time = request.session['end_date_time']
+        images = Image.objects.filter(date_time__gte=start_date_time, date_time__lte=end_date_time)
+        image_list = []
+        for image in images:
+            image_list.append(image.image.url)
+                    
+        #print(image_list)
+        return render(request, 'player/play.html', {
+            'images': image_list,
+        })
 
     return HttpResponseRedirect('config')
 
@@ -45,12 +54,10 @@ def logout_view(request):
     return HttpResponseRedirect('/')
 
 
-DATETIME_FORMAT = '%Y-%m-%d %H:%M'
+date_time_FORMAT = '%Y-%m-%d %H:%M'
 
-def datetime_range_is_valid(datetime_tuple1, datetime_tuple2):
-    datetime1 = datetime_tuple1[0] + ' ' + datetime_tuple1[1]
-    datetime2 = datetime_tuple2[0] + ' ' + datetime_tuple2[1]
-    return time.strptime(datetime1, DATETIME_FORMAT) < time.strptime(datetime2, DATETIME_FORMAT)
+def date_time_range_is_valid(date_time1, date_time2):
+    return time.strptime(date_time1, date_time_FORMAT) < time.strptime(date_time2, date_time_FORMAT)
 
 def config(request):
     is_invalid = False
@@ -58,8 +65,8 @@ def config(request):
         request.session['player_type'] = request.POST['player-type']
 
         start_date = request.POST['start-date']
-        end_date = request.POST['end-date']
         start_time = request.POST['start-time']
+        end_date = request.POST['end-date']
         end_time = request.POST['end-time']
         
         # check if one of the region ranges are present
@@ -69,12 +76,12 @@ def config(request):
             request.session['long_start_ratio'] = request.POST['long-start-ratio']
             request.session['long_end_ratio'] = request.POST['long-end-ratio']
         
+        start_date_time = start_date + ' ' + start_time
+        end_date_time = end_date + ' ' + end_time
         # validate date range
-        if datetime_range_is_valid((start_date, start_time), (end_date, end_time)):
-            request.session['start_date'] = start_date
-            request.session['end_date'] = end_date
-            request.session['start_time'] = start_time
-            request.session['end_time'] = end_time
+        if date_time_range_is_valid(start_date_time, end_date_time):
+            request.session['start_date_time'] = start_date_time
+            request.session['end_date_time'] = end_date_time
             # everything is valid, player is now configured
             request.session['is_configured'] = True
             return HttpResponseRedirect('/')
@@ -117,9 +124,8 @@ def upload(request):
                 hour = matches.group(4)
                 minute = matches.group(5)
 
-                date = year + '-' + month + '-' + day
-                time = hour + ':' + minute
-                Image.objects.create(image_type=image_type, date=date, time=time, image=image)
+                date_time = year + '-' + month + '-' + day + ' ' + hour + ':' + minute
+                Image.objects.create(image_type=image_type, date_time=date_time, image=image)
         return HttpResponseRedirect('/')
     
     return render(request, 'player/upload.html', {})

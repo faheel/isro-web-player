@@ -10,9 +10,8 @@ class Image(models.Model):
     )
     image_type = models.CharField(max_length=64, choices=IMAGE_TYPE_CHOICES, default=CLOUD_COVER)
     
-    date = models.DateField()
-    time = models.TimeField()
+    date_time = models.DateTimeField()
     
     class Meta:
-        ordering = ['date', 'time']
-        unique_together = ('image_type', 'date', 'time')
+        ordering = ['date_time']
+        unique_together = ('image_type', 'date_time')
