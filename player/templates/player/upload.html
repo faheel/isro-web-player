@@ -65,7 +65,7 @@
 {% endblock %}
 
 {% block scripts %}
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="{% static 'player/scripts/moment.min.js' %}"></script>
   <script src="{% static 'player/scripts/upload.js' %}"></script>
   <script>
     var imageTypeMenu = document.getElementById('select-menu');

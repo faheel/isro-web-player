@@ -12,9 +12,9 @@
   <link rel="shortcut icon" href="{% static 'player/images/favicon.png' %}" type="image/x-icon">
   
   <!-- Fonts -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="{% static 'player/styles/material-icons.css' %}">
   <!-- Styles -->
-  <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.css">
+  <link rel="stylesheet" href="{% static 'player/styles/material-components-web.css' %}">
   <link rel="stylesheet" href="{% static 'player/styles/base.css' %}">
   {% block styles %}{% endblock %}
 </head>
@@ -80,7 +80,7 @@
   </footer>
 
   <!-- Scripts -->
-  <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.js"></script>
+  <script src="{% static 'player/scripts/material-components-web.js' %}"></script>
   <script>
     window.mdc.autoInit();
 
