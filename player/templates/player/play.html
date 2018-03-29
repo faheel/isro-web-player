@@ -2,24 +2,98 @@
 {% load static %}
 
 {% block styles %}
-<link rel="stylesheet" href="{% static 'player/styles/player.css' %}">
+  <link rel="stylesheet" href="{% static 'player/styles/player.css' %}">
+{% endblock %}
+
+{% block toolbar_controls %}
+  <a class="material-icons mdc-toolbar__icon"
+     href="/config" alt="Settings" aria-label="Settings">
+    settings
+  </a>
 {% endblock %}
 
 {% block content %}
-<div id="player-container">
-  <div id="player-frame">
+  <div class="mdc-layout-grid">
+    <section id="player-container">
+      <div id="player-frame">
+        <canvas id="player"></canvas>
+      </div>
+      <div id="player-controls">
+        <div>
+          <i class="material-icons" id="skip-to-start">skip_previous</i>
+          <i class="material-icons" id="play">play_arrow</i>
+          <i class="material-icons" id="skip-to-end">skip_next</i>
+        </div>
+        <div>
+          <i class="material-icons" id="player-size">fullscreen</i>
+          <i class="material-icons" id="playback-speed">slow_motion_video</i>
+        </div>
+      </div>
+    </section>
 
+    <section>
+      <h2 class="mdc-typography--headline">Current configuration</h2>
+      <h3 class="mdc-typography--title">Player type</h3>
+      <p class="mdc-typography--body1">
+        {% if request.session.player_type == 'cloud_cover' %}
+          Cloud cover
+        {% endif %}
+      </p>
+      <h3 class="mdc-typography--title">Time range</h3>
+      <h4 class="mdc-typography--subheading2">Start</h4>
+      <p class="mdc-typography--body1" id="start-datetime">
+        {{ request.session.start_date }} {{ request.session.start_date_time }} 
+      </p>
+      <h4 class="mdc-typography--subheading2">End</h4>
+      <p class="mdc-typography--body1" id="end-datetime">
+        {{ request.session.end_date }} {{ request.session.end_date_time }} 
+      </p>
+      <h3 class="mdc-typography--title">Selected region</h3>
+    </section>
   </div>
-  <div id="player-controls">
-    <div>
-      <i class="material-icons" id="skip-to-start">skip_previous</i>
-      <i class="material-icons" id="play">play_arrow</i>
-      <i class="material-icons" id="skip-to-end">skip_next</i>
-    </div>
-    <div>
-      <i class="material-icons" id="player-size">fullscreen</i>
-      <i class="material-icons" id="playback-speed">slow_motion_video</i>
-    </div>
-  </div>
-</div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{% static 'player/scripts/moment.min.js' %}"></script>
+  <script src="{% static 'player/scripts/player.js' %}"></script>
+  <script>
+    var image_paths = {{ images | safe }};
+    var image_elements = [];
+    for (var i = 0; i < image_paths.length; i++) {
+      var image = document.createElement('img');
+      image.src = image_paths[i];
+      image_elements.push(image);
+    }
+
+    var loaded = 0;
+    for (var i = 0; i < image_elements.length; i++) {
+      image_elements[i].onload = function (e) {
+        loaded++;
+        if (loaded === image_elements.length)
+          draw();
+      }
+    }
+
+    function draw() {
+      counter = 0,
+        delayInMilliseconds = 100,
+        maxNum = image_elements.length - 1,
+
+        myCanvas = document.getElementById('player'),
+        ctx = myCanvas.getContext('2d'),
+
+        me = this;
+        this._draw = function () {
+          ctx.clearRect(0, 0, myCanvas.width, myCanvas.height)
+          ctx.drawImage(image_elements[counter++], 0, 0);
+          if (counter > maxNum) return;   // counter = 0;
+
+        setTimeout(me._draw, delayInMilliseconds);    // use me instead of this
+      }
+      this._draw();
+    }
+
+    window.onload = draw;
+
+  </script>
 {% endblock %}
