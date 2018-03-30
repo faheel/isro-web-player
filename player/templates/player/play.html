@@ -15,18 +15,16 @@
 {% block content %}
   <div class="mdc-layout-grid">
     <section id="player-container">
-      <div id="player-frame">
-        <canvas id="player"></canvas>
-      </div>
+      <canvas id="player"></canvas>
       <div id="player-controls">
         <div>
-          <i class="material-icons" id="skip-to-start">skip_previous</i>
-          <i class="material-icons" id="play">play_arrow</i>
-          <i class="material-icons" id="skip-to-end">skip_next</i>
+          <i class="material-icons" id="jump-to-start" onclick="jumpToStart()">skip_previous</i>
+          <i class="material-icons" id="play-pause" onclick="playPause()">play_arrow</i>
+          <i class="material-icons" id="jump-to-end" onclick="jumpToEnd()">skip_next</i>
         </div>
         <div>
-          <i class="material-icons" id="player-size">fullscreen</i>
-          <i class="material-icons" id="playback-speed">slow_motion_video</i>
+          <i class="material-icons" id="size" onclick="setSize()">fullscreen</i>
+          <i class="material-icons" id="speed" onclick="setSpeed()">slow_motion_video</i>
         </div>
       </div>
     </section>
@@ -42,26 +40,58 @@
       <h3 class="mdc-typography--title">Time range</h3>
       <h4 class="mdc-typography--subheading2">Start</h4>
       <p class="mdc-typography--body1" id="start-datetime">
-        {{ request.session.start_date }} {{ request.session.start_date_time }} 
+        {{ request.session.start_date_time }}
       </p>
       <h4 class="mdc-typography--subheading2">End</h4>
       <p class="mdc-typography--body1" id="end-datetime">
-        {{ request.session.end_date }} {{ request.session.end_date_time }} 
+        {{ request.session.end_date_time }}
       </p>
       <h3 class="mdc-typography--title">Selected region</h3>
+      <canvas id="region-canvas"></canvas>
     </section>
   </div>
 {% endblock %}
 
 {% block scripts %}
   <script src="{% static 'player/scripts/moment.min.js' %}"></script>
-  <script src="{% static 'player/scripts/player.js' %}"></script>
   <script>
+    var startDateTime = document.getElementById('start-datetime');
+    var endDateTime = document.getElementById('end-datetime');
+    startDateTime.innerText = moment(startDateTime.innerText).format('LLL');
+    endDateTime.innerText = moment(endDateTime.innerText).format('LLL');
+  </script>
+  <script>
+    var canvas = document.getElementById('region-canvas'),
+      ctx = canvas.getContext('2d'),
+      rect = {};
+
+    canvas.height = canvas.width;
+
+    var latStartRatio = {{ request.session.lat_start_ratio }};
+    var latEndRatio = {{ request.session.lat_end_ratio }};
+    var longStartRatio = {{ request.session.long_start_ratio }};
+    var longEndRatio = {{ request.session.long_end_ratio }};
+
+    ctx.fillStyle = 'rgba(33,150,243,0.4)';
+
+    rect.w = (longEndRatio - longStartRatio) * canvas.width;
+    rect.h = (latEndRatio - latStartRatio) * canvas.height;
+    rect.startX = longStartRatio * canvas.width;
+    rect.startY = latStartRatio * canvas.height;
+    ctx.fillRect(rect.startX, rect.startY, rect.w, rect.h);
+  </script>
+  <script>
+    var playerCanvas = document.getElementById('player');
+    playerCanvas.height = playerCanvas.width;
+    var playerContext = playerCanvas.getContext('2d');
+
     var image_paths = {{ images | safe }};
     var image_elements = [];
     for (var i = 0; i < image_paths.length; i++) {
       var image = document.createElement('img');
       image.src = image_paths[i];
+      image.style.width = playerCanvas.width;
+      image.style.height = playerCanvas.height;
       image_elements.push(image);
     }
 
@@ -74,26 +104,53 @@
       }
     }
 
+    const baseDelayMilliseconds = 100;
+    var delayMilliseconds = baseDelayMilliseconds;
+
     function draw() {
       counter = 0,
-        delayInMilliseconds = 100,
         maxNum = image_elements.length - 1,
-
-        myCanvas = document.getElementById('player'),
-        ctx = myCanvas.getContext('2d'),
-
         me = this;
         this._draw = function () {
-          ctx.clearRect(0, 0, myCanvas.width, myCanvas.height)
-          ctx.drawImage(image_elements[counter++], 0, 0);
-          if (counter > maxNum) return;   // counter = 0;
+          playerContext.clearRect(0, 0, playerCanvas.width, playerCanvas.height);
+          playerContext.drawImage(image_elements[counter], 0, 0);
+          counter++;
+          if (counter > maxNum)
+            return;   // all images have been drawn
 
-        setTimeout(me._draw, delayInMilliseconds);    // use me instead of this
+        setTimeout(me._draw, delayMilliseconds);    // use me instead of this
       }
       this._draw();
     }
 
     window.onload = draw;
 
+    var playPauseControl = document.getElementById('play-pause');
+    var jumpToStartControl = document.getElementById('jump-to-start');
+    var jumpToEndControl = document.getElementById('jump-to-end');
+    var sizeControl = document.getElementById('size');
+    var speedControl = document.getElementById('speed');
+
+    function playPause() {
+      console.log('play / pause');
+    }
+
+    function jumpToStart() {
+      console.log('jump to start');
+    }
+
+    function jumpToEnd() {
+      console.log('jump to end');
+    }
+
+    function setSize() {
+      console.log('set size');
+    }
+
+    var speed = '0.25x';
+    function setSpeed() {
+      var speedModifier = parseFloat(speed.substr(0, speed.length - 1));
+      delayMilliseconds = baseDelayMilliseconds / speedModifier;
+    }
   </script>
 {% endblock %}
