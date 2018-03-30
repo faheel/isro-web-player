@@ -56,13 +56,16 @@ def logout_view(request):
     return HttpResponseRedirect('/')
 
 
-date_time_FORMAT = '%Y-%m-%d %H:%M'
+DATE_TIME_FORMAT = '%Y-%m-%d %H:%M'
 
 def date_time_range_is_valid(date_time1, date_time2):
-    ma=Image.objects.all().aggregate(Max('date_time')).value()
-    mi=Image.objects.all().aggregate(Min('date_time')).value()
-    return time.strptime(mi, date_time_FORMAT) <= time.strptime(date_time1, date_time_FORMAT) and time.strptime(ma, date_time_FORMAT) >= time.strptime(date_time1, date_time_FORMAT) and time.strptime(mi, date_time_FORMAT) <= time.strptime(date_time2, date_time_FORMAT) and time.strptime(ma, date_time_FORMAT) >= time.strptime(date_time2, date_time_FORMAT)
-    return time.strptime(date_time1, date_time_FORMAT) < time.strptime(date_time2, date_time_FORMAT)
+    max_datetime = Image.objects.all().aggregate(Max('date_time')).value()
+    min_datetime = Image.objects.all().aggregate(Min('date_time')).value()
+    
+    return (time.strptime(date_time1, DATE_TIME_FORMAT) < time.strptime(date_time2, DATE_TIME_FORMAT)
+        and time.strptime(min_datetime, DATE_TIME_FORMAT) <= time.strptime(date_time1, DATE_TIME_FORMAT)
+        and time.strptime(date_time2, DATE_TIME_FORMAT) <= time.strptime(max_datetime, DATE_TIME_FORMAT))
+    
 
 def config(request):
     is_invalid = False
