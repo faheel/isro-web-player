@@ -2,30 +2,38 @@
   display: flex;
   flex-direction: column;
   padding: 2rem 0;
+  margin: auto;
+  width: 100%;
+  max-width: 640px;
 }
 
-#player-frame {
-  background-color: #eee;
-  width: 512px;
-  height: 512px;
-  margin: 0 auto;
+#player {
+  width: 100%;
+  background-size: contain;
 }
 
 #player-controls {
   background-color: #222;
   color: var(--mdc-theme-text-icon-on-primary);
-  width: 512px;
+  width: 100%;
   height: 48px;
   margin: 0 auto;
   display: flex;
   align-content: space-between;
 }
 
-#play {
+#player-controls div {
+  margin: auto;
+}
+
+#player-controls #play {
   font-size: 2rem !important;
   vertical-align: bottom;
 }
 
-#player-controls div {
-  margin: auto;
+#region-canvas {
+  width: 100%;
+  max-width: 400px;
+  background-image: url('../images/map.jpg');
+  background-size: contain;
 }
