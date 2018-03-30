@@ -3,7 +3,7 @@ import time
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.db import transaction
+from django.db import transaction, IntegrityError
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.db.models import Max
@@ -59,12 +59,14 @@ def logout_view(request):
 DATE_TIME_FORMAT = '%Y-%m-%d %H:%M'
 
 def date_time_range_is_valid(date_time1, date_time2):
-    max_datetime = Image.objects.all().aggregate(Max('date_time')).value()
-    min_datetime = Image.objects.all().aggregate(Min('date_time')).value()
+    max_datetime = str(Image.objects.all().aggregate(Max('date_time'))['date_time__max'])[:-9]
+    min_datetime = str(Image.objects.all().aggregate(Min('date_time'))['date_time__min'])[:-9]
+    if max_datetime and min_datetime:
+        return (time.strptime(date_time1, DATE_TIME_FORMAT) < time.strptime(date_time2, DATE_TIME_FORMAT)
+            and time.strptime(min_datetime, DATE_TIME_FORMAT) <= time.strptime(date_time1, DATE_TIME_FORMAT)
+            and time.strptime(date_time2, DATE_TIME_FORMAT) <= time.strptime(max_datetime, DATE_TIME_FORMAT))
     
-    return (time.strptime(date_time1, DATE_TIME_FORMAT) < time.strptime(date_time2, DATE_TIME_FORMAT)
-        and time.strptime(min_datetime, DATE_TIME_FORMAT) <= time.strptime(date_time1, DATE_TIME_FORMAT)
-        and time.strptime(date_time2, DATE_TIME_FORMAT) <= time.strptime(max_datetime, DATE_TIME_FORMAT))
+    return False
     
 
 def config(request):
@@ -118,10 +120,10 @@ MONTH_NUM = {
 
 
 @login_required
-@transaction.atomic
 def upload(request):
     imageRegex = re.compile(r'3DIMG_(\d{2})(\w{3})(\d{4})_(\d{2})(\d{2})_.+\.jpg')
     if request.method == 'POST':
+        warning = None
         image_type = request.POST['image-type']
         for key in request.FILES:
             for image in request.FILES.getlist(key):
@@ -134,7 +136,14 @@ def upload(request):
 
                 date_time = year + '-' + month + '-' + day + ' ' + hour + ':' + minute
 
-                Image.objects.create(image_type=image_type, date_time=date_time, image=image)
-        return HttpResponseRedirect('/')
+                try:
+                    with transaction.atomic():
+                        Image.objects.create(image_type=image_type, date_time=date_time, image=image)
+                except IntegrityError:
+                    warning = 'Some images were duplicates, they were not uploaded'
+        
+        return render(request, 'player/play.html', {
+            'warning': warning,
+        })
     
     return render(request, 'player/upload.html', {})
