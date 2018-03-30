@@ -5,7 +5,7 @@ from django.db import models
 
 
 class Image(models.Model):
-    def get_file_path(self, instance, filename):
+    def get_file_path(self, filename):
         self.name = filename
         ext = filename.split('.')[-1]
         filename = "%s.%s" % (uuid.uuid4(), ext)
@@ -17,7 +17,6 @@ class Image(models.Model):
     IMAGE_TYPE_CHOICES = (
         (CLOUD_COVER, 'Cloud cover'),
     )
-    
     image_type = models.CharField(max_length=64, choices=IMAGE_TYPE_CHOICES, default=CLOUD_COVER)
     
     name = models.CharField(max_length=64)
