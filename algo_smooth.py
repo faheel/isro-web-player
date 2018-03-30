@@ -38,23 +38,18 @@ def join_img(SRC_DIR, dnt):
         
     except:
         print('folders already exist')
-    
-    
     a = 0
     new = Image.new('RGB', (768,768))
     name = 'fd/xyz_'
-    
-	for i in range(0,700,256):
+    for i in range(0,700,256):
         for j in range(0,700,256):
-        	#open image here
-        	im = Image.open( SRC_DIR + name + str(0)+ '.png')
-        	new.paste(im, (i,j))
-        	a += 0
-        		
+            im = Image.open( SRC_DIR + name + str(a)+ '.png')
+            new.paste(im, (i,j))
+            a += 0
+    
     new = new.crop((61,61,708,708))
-
-	#change new to image name
-	new.save(SRC_DIR + 'fe/' + dnt + '.png')
+    #change new to image name
+    new.save(SRC_DIR + 'fe/' + dnt + '.png')
 	
 def smooth(src_dir='/home/huzaifa/sih/test_Data/'):
     global months
