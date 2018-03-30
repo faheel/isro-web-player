@@ -6,6 +6,8 @@ from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from django.db.models import Max
+from django.db.models import Min
 
 from .forms import LoginForm
 from .models import Image
@@ -57,6 +59,9 @@ def logout_view(request):
 date_time_FORMAT = '%Y-%m-%d %H:%M'
 
 def date_time_range_is_valid(date_time1, date_time2):
+    ma=Image.objects.all().aggregate(Max('date_time')).value()
+    mi=Image.objects.all().aggregate(Min('date_time')).value()
+    return time.strptime(mi, date_time_FORMAT) <= time.strptime(date_time1, date_time_FORMAT) and time.strptime(ma, date_time_FORMAT) >= time.strptime(date_time1, date_time_FORMAT) and time.strptime(mi, date_time_FORMAT) <= time.strptime(date_time2, date_time_FORMAT) and time.strptime(ma, date_time_FORMAT) >= time.strptime(date_time2, date_time_FORMAT)
     return time.strptime(date_time1, date_time_FORMAT) < time.strptime(date_time2, date_time_FORMAT)
 
 def config(request):
