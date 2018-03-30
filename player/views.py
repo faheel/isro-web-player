@@ -130,6 +130,7 @@ def upload(request):
                 minute = matches.group(5)
 
                 date_time = year + '-' + month + '-' + day + ' ' + hour + ':' + minute
+
                 Image.objects.create(image_type=image_type, date_time=date_time, image=image)
         return HttpResponseRedirect('/')
     
