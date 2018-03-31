@@ -17,28 +17,24 @@
     <section id="player-container">
       <canvas id="player"></canvas>
       <div id="player-controls">
-        <div>
+        <div style="display: flex; padding-left: 2rem; padding-right: 2rem">
           <i class="material-icons" id="jump-to-start" onclick="jumpToStart()">replay</i>
           <i class="material-icons" id="play-pause" onclick="playPause()">play_arrow</i>
         </div>
-        <div class="mdc-layout-grid">
-          <div class="mdc-layout-grid__inner">
-              <div class="mdc-slider mdc-slider--discrete" tabindex="0" role="slider"
-                aria-valuemin="0" aria-valuemax="4" aria-valuenow="2"
-                aria-label="Select Value">
-              <div class="mdc-slider__track-container">
-                <div class="mdc-slider__track"></div>
-              </div>
-              <div class="mdc-slider__thumb-container">
-                <div class="mdc-slider__pin">
-                  <span class="mdc-slider__pin-value-marker"></span>
-                </div>
-                <svg class="mdc-slider__thumb" width="21" height="21">
-                  <circle cx="10.5" cy="10.5" r="7.875"></circle>
-                </svg>
-                <div class="mdc-slider__focus-ring"></div>
-              </div>
+        <div class="mdc-slider mdc-slider--discrete" tabindex="0" role="slider"
+            aria-valuemin="0" aria-valuemax="4" aria-valuenow="2"
+            aria-label="Select Value" style="margin-right: 2rem">
+          <div class="mdc-slider__track-container">
+            <div class="mdc-slider__track"></div>
+          </div>
+          <div class="mdc-slider__thumb-container">
+            <div class="mdc-slider__pin">
+              <span class="mdc-slider__pin-value-marker"></span>
             </div>
+            <svg class="mdc-slider__thumb" width="21" height="21">
+              <circle cx="10.5" cy="10.5" r="7.875"></circle>
+            </svg>
+            <div class="mdc-slider__focus-ring"></div>
           </div>
         </div>
       </div>
