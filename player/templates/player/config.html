@@ -74,7 +74,7 @@
                       type="date"
                       id="start-date"
                       name="start-date"
-                      value="2018-01-01" required>
+                      value="{% if request.session.start_date %}{{ request.session.start_date }}{% else %}2018-01-01{% endif %}" required>
               <label class="mdc-floating-label" for="start-date">
                 Date
               </label>
@@ -85,7 +85,7 @@
                      type="time"
                      id="start-time"
                      name="start-time"
-                     value="00:00" required>
+                     value="{% if request.session.start_time %}{{ request.session.start_time }}{% else %}00:00{% endif %}" required>
               <label class="mdc-floating-label" for="start-time">
                 Time
               </label>
@@ -100,7 +100,7 @@
                       type="date"
                       id="end-date"
                       name="end-date"
-                      value="2018-01-01" required>
+                      value="{% if request.session.end_date %}{{ request.session.end_date }}{% else %}2018-01-01{% endif %}" required>
               <label class="mdc-floating-label" for="end-date">
                 Date
               </label>
@@ -111,7 +111,7 @@
                       type="time"
                       id="end-time"
                       name="end-time"
-                      value="00:00" required>
+                      value="{% if request.session.end_time %}{{ request.session.end_time }}{% else %}00:00{% endif %}" required>
               <label class="mdc-floating-label" for="end-time">
                 Time
               </label>
