@@ -90,8 +90,14 @@ def config(request):
         end_date_time = end_date + ' ' + end_time
         # validate date range
         if date_time_range_is_valid(start_date_time, end_date_time):
+            request.session['start_date'] = start_date
+            request.session['start_time'] = start_time
+            request.session['end_date'] = end_date
+            request.session['end_time'] = end_time
+
             request.session['start_date_time'] = start_date_time
             request.session['end_date_time'] = end_date_time
+
             # everything is valid, player is now configured
             request.session['is_configured'] = True
             return HttpResponseRedirect('/')
