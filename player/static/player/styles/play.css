@@ -3,13 +3,13 @@
   flex-direction: column;
   padding: 2rem 0;
   margin: auto;
-  width: 100%;
-  max-width: 640px;
+  width: 100vw;
+  max-width: 512px;
 }
 
 #player {
-  width: 100%;
-  background-size: contain;
+  width: 100vw;
+  max-width: 512px;
 }
 
 #player-controls {
@@ -24,6 +24,9 @@
 
 #player-controls div {
   margin: auto;
+}
+#player-controls .material-icons {
+  padding-right: 16px;
 }
 
 #player-controls #play {

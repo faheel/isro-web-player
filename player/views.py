@@ -8,6 +8,9 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.db.models import Max
 from django.db.models import Min
+from isro.settings import MEDIA_URL
+
+import PIL
 
 from .forms import LoginForm
 from .models import Image
@@ -19,14 +22,34 @@ def play(request):
         end_date_time = request.session['end_date_time']
         images = Image.objects.filter(date_time__gte=start_date_time, date_time__lte=end_date_time)
         image_list = []
+        lat_start_ratio = int(float(request.session['lat_start_ratio']) * 100)
+        lat_end_ratio = int(float(request.session['lat_end_ratio']) * 100)
+        long_start_ratio = int(float(request.session['long_start_ratio']) * 100)
+        long_end_ratio = int(float(request.session['long_end_ratio']) * 100)
+
         for image in images:
-            image_list.append(image.image.url)
-                    
-        #print(image_list)
+            try:
+                if 'tmp' in image.image.name:
+                    continue
+                img = PIL.Image.open(image.image)
+                width, height = img.size
+                startX = long_start_ratio * width // 100;
+                startY = lat_start_ratio * height // 100;
+                endX = startX + (long_end_ratio - lat_start_ratio) * width // 100
+                endY = startY + (lat_end_ratio - lat_start_ratio) * height // 100
+                #print(startX, startY, endX, endY)
+                x = img.crop((startY, startX, endY, endX))
+                #print(x)
+                #x.show() 
+                name = 'uploads/tmp'+image.image.name.split('uploads/')[1]
+                x.save(MEDIA_URL[1:] + name)
+                image_list.append(MEDIA_URL[1:] + name)
+            except Exception as e:
+                print(e)
         return render(request, 'player/play.html', {
             'images': image_list,
         })
-
+    
     return HttpResponseRedirect('config')
 
 

@@ -18,13 +18,28 @@
       <canvas id="player"></canvas>
       <div id="player-controls">
         <div>
-          <i class="material-icons" id="jump-to-start" onclick="jumpToStart()">skip_previous</i>
+          <i class="material-icons" id="jump-to-start" onclick="jumpToStart()">replay</i>
           <i class="material-icons" id="play-pause" onclick="playPause()">play_arrow</i>
-          <i class="material-icons" id="jump-to-end" onclick="jumpToEnd()">skip_next</i>
         </div>
-        <div>
-          <i class="material-icons" id="size" onclick="setSize()">fullscreen</i>
-          <i class="material-icons" id="speed" onclick="setSpeed()">slow_motion_video</i>
+        <div class="mdc-layout-grid">
+          <div class="mdc-layout-grid__inner">
+              <div class="mdc-slider mdc-slider--discrete" tabindex="0" role="slider"
+                aria-valuemin="0" aria-valuemax="4" aria-valuenow="2"
+                aria-label="Select Value">
+              <div class="mdc-slider__track-container">
+                <div class="mdc-slider__track"></div>
+              </div>
+              <div class="mdc-slider__thumb-container">
+                <div class="mdc-slider__pin">
+                  <span class="mdc-slider__pin-value-marker"></span>
+                </div>
+                <svg class="mdc-slider__thumb" width="21" height="21">
+                  <circle cx="10.5" cy="10.5" r="7.875"></circle>
+                </svg>
+                <div class="mdc-slider__focus-ring"></div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -72,26 +87,6 @@
     startDateTime.innerText = moment(startDateTime.innerText).format('LLL');
     endDateTime.innerText = moment(endDateTime.innerText).format('LLL');
   </script>
-  <script>
-    var canvas = document.getElementById('region-canvas'),
-      ctx = canvas.getContext('2d'),
-      rect = {};
-
-    canvas.height = canvas.width;
-
-    var latStartRatio = {{ request.session.lat_start_ratio }};
-    var latEndRatio = {{ request.session.lat_end_ratio }};
-    var longStartRatio = {{ request.session.long_start_ratio }};
-    var longEndRatio = {{ request.session.long_end_ratio }};
-
-    ctx.fillStyle = 'rgba(33,150,243,0.4)';
-
-    rect.w = (longEndRatio - longStartRatio) * canvas.width;
-    rect.h = (latEndRatio - latStartRatio) * canvas.height;
-    rect.startX = longStartRatio * canvas.width;
-    rect.startY = latStartRatio * canvas.height;
-    ctx.fillRect(rect.startX, rect.startY, rect.w, rect.h);
-  </script>
   {% if warning %}
     <script>
       mdc.snackbar.MDCSnackbar.attachTo(document.querySelector('.mdc-snackbar'))
@@ -104,17 +99,35 @@
     </script>
   {% endif %}
   <script>
+    var regionCanvas = document.getElementById('region-canvas'),
+      regionContext = regionCanvas.getContext('2d'),
+      rect = {};
+
+    regionCanvas.height = regionCanvas.width;
+
+    var latStartRatio = {{ request.session.lat_start_ratio }};
+    var latEndRatio = {{ request.session.lat_end_ratio }};
+    var longStartRatio = {{ request.session.long_start_ratio }};
+    var longEndRatio = {{ request.session.long_end_ratio }};
+
+    regionContext.fillStyle = 'rgba(33,150,243,0.4)';
+
+    rect.w = (longEndRatio - longStartRatio) * regionCanvas.width;
+    rect.h = (latEndRatio - latStartRatio) * regionCanvas.height;
+    rect.startX = longStartRatio * regionCanvas.width;
+    rect.startY = latStartRatio * regionCanvas.height;
+    regionContext.fillRect(rect.startX, rect.startY, rect.w, rect.h);
+  
     var playerCanvas = document.getElementById('player');
     playerCanvas.height = playerCanvas.width;
     var playerContext = playerCanvas.getContext('2d');
 
     var image_paths = {{ images | safe }};
     var image_elements = [];
+
     for (var i = 0; i < image_paths.length; i++) {
       var image = document.createElement('img');
       image.src = image_paths[i];
-      image.style.width = playerCanvas.width;
-      image.style.height = playerCanvas.height;
       image_elements.push(image);
     }
 
@@ -136,9 +149,9 @@
         me = this;
         this._draw = function () {
           playerContext.clearRect(0, 0, playerCanvas.width, playerCanvas.height);
-          playerContext.drawImage(image_elements[counter], 0, 0);
+          playerContext.drawImage(image_elements[counter], 0, 0, playerCanvas.width, playerCanvas.height);
           counter++;
-          if (counter > maxNum)
+          if (counter >= maxNum)
             return;   // all images have been drawn
 
         setTimeout(me._draw, delayMilliseconds);    // use me instead of this
@@ -150,8 +163,6 @@
 
     var playPauseControl = document.getElementById('play-pause');
     var jumpToStartControl = document.getElementById('jump-to-start');
-    var jumpToEndControl = document.getElementById('jump-to-end');
-    var sizeControl = document.getElementById('size');
     var speedControl = document.getElementById('speed');
 
     function playPause() {
@@ -159,21 +170,22 @@
     }
 
     function jumpToStart() {
-      console.log('jump to start');
-    }
-
-    function jumpToEnd() {
-      console.log('jump to end');
+      draw();
     }
 
     function setSize() {
       console.log('set size');
     }
 
-    var speed = '0.25x';
-    function setSpeed() {
+    function setSpeed(speed) {
       var speedModifier = parseFloat(speed.substr(0, speed.length - 1));
       delayMilliseconds = baseDelayMilliseconds / speedModifier;
     }
+
+    var speedSliderValues = ['0.25x', '0.5x', '1x', '2x', '4x'];
+    var speedSlider = new mdc.slider.MDCSlider(document.querySelector('.mdc-slider'));
+    speedSlider.listen('MDCSlider:input', function() {
+      setSpeed(speedSliderValues[speedSlider.value]);
+    });
   </script>
 {% endblock %}
